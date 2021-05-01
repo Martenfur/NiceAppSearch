@@ -4,22 +4,22 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 
-class AppListAdapter(private val context: Context, private val arrayList: java.util.ArrayList<AppListData>) :
-	BaseAdapter()
+class AppListAdapter(private val context: Context, private val allItems: java.util.ArrayList<AppListData>) :
+	BaseAdapter(), Filterable
 {
 	private lateinit var appIcon: ImageView
 	private lateinit var appName: TextView
 
-	override fun getCount(): Int =
-		arrayList.size
+	private var filteredItems: ArrayList<AppListData> = allItems
 
+
+	override fun getCount(): Int =
+		filteredItems.size
 
 	override fun getItem(position: Int): Any =
-		position
+		filteredItems.get(position);
 
 
 	override fun getItemId(position: Int): Long =
@@ -33,9 +33,48 @@ class AppListAdapter(private val context: Context, private val arrayList: java.u
 		appIcon = convertView.findViewById(R.id.appIcon)
 		appName = convertView.findViewById(R.id.appName)
 
-		appIcon.setImageDrawable(arrayList[position].appIcon)
-		appName.text = arrayList[position].appName
+		appIcon.setImageDrawable(filteredItems[position].appIcon)
+		appName.text = filteredItems[position].appName
 
 		return convertView
+	}
+
+
+	override fun getFilter(): Filter
+	{
+		return object : Filter()
+		{
+			override fun publishResults(charSequence: CharSequence?, filterResults: FilterResults)
+			{
+				filteredItems = filterResults.values as ArrayList<AppListData>
+				notifyDataSetChanged()
+			}
+
+			override fun performFiltering(charSequence: CharSequence?): FilterResults
+			{
+				val queryString = charSequence?.toString()?.toLowerCase()
+
+				val filterResults = FilterResults()
+				if (queryString==null || queryString.isEmpty())
+				{
+					filterResults.values = allItems
+				}
+				else
+				{
+					var newFilteredItems = allItems.filter{
+						it.appName.toLowerCase().contains(queryString)
+					}
+					if (newFilteredItems.size > 0)
+					{
+						filterResults.values = newFilteredItems
+					}
+					else
+					{
+						filterResults.values = filteredItems
+					}
+				}
+				return filterResults
+			}
+		}
 	}
 }
