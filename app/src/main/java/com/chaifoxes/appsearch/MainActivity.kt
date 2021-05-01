@@ -25,9 +25,30 @@ class MainActivity : AppCompatActivity()
 
 		listView = findViewById(R.id.app_list_view)
 
+		listView.isEnabled = false
+
+
+		val search = findViewById<TextInputEditText>(R.id.app_search)
+		search.doOnTextChanged(fun(text: CharSequence?, start: Int, count: Int, after: Int)
+		{
+			initListView()
+			(listView.adapter as AppListAdapter).filter.filter(text)
+		})
+
+		showKeyboard()
+	}
+
+
+	private fun initListView()
+	{
+		if (listView.isEnabled)
+		{
+			return
+		}
+		listView.isEnabled = true
+
 		val adapter = AppListAdapter(this, createAppList())
 		listView.adapter = adapter
-
 		listView.setOnItemClickListener(object : AdapterView.OnItemClickListener
 		{
 			override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -46,18 +67,9 @@ class MainActivity : AppCompatActivity()
 			}
 		})
 
-
-		val search = findViewById<TextInputEditText>(R.id.app_search)
-		search.doOnTextChanged { text, start, count, after ->
-			(listView.adapter as AppListAdapter).filter.filter(
-				text
-			)
-		}
-
-		showKeyboard()
 	}
 
-	fun showKeyboard()
+	private fun showKeyboard()
 	{
 		findViewById<View>(android.R.id.content).rootView.requestFocus()
 		val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -65,7 +77,7 @@ class MainActivity : AppCompatActivity()
 	}
 
 
-	fun createAppList(): ArrayList<AppListData>
+	private fun createAppList(): ArrayList<AppListData>
 	{
 		val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
 
