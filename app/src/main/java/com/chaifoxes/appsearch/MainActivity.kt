@@ -1,14 +1,17 @@
 package com.chaifoxes.appsearch
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity()
 {
@@ -25,12 +28,34 @@ class MainActivity : AppCompatActivity()
 		val adapter = AppListAdapter(this, createAppList())
 		listView.adapter = adapter
 
+		listView.setOnItemClickListener(object : AdapterView.OnItemClickListener
+		{
+			override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
+			{
+				val item = parent?.getItemAtPosition(position) as AppListData
+
+				// TODO: move somewhere else.
+				// Opening selected app.
+				val intent: Intent? = packageManager.getLaunchIntentForPackage(item.appPackageName)
+				intent?.addCategory(Intent.CATEGORY_LAUNCHER)
+
+				applicationContext.startActivity(intent)
+
+				// And closing our own.
+				finishAndRemoveTask()
+			}
+		})
+
+
 		val search = findViewById<TextInputEditText>(R.id.app_search)
-		search.doOnTextChanged { text, start, count, after ->  (listView.adapter as AppListAdapter).filter.filter(text)}
+		search.doOnTextChanged { text, start, count, after ->
+			(listView.adapter as AppListAdapter).filter.filter(
+				text
+			)
+		}
 
 		showKeyboard()
 	}
-
 
 	fun showKeyboard()
 	{
@@ -40,7 +65,7 @@ class MainActivity : AppCompatActivity()
 	}
 
 
-	fun createAppList() : ArrayList<AppListData>
+	fun createAppList(): ArrayList<AppListData>
 	{
 		val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
 
@@ -52,6 +77,7 @@ class MainActivity : AppCompatActivity()
 			{
 				val data = AppListData(
 					packageManager.getApplicationLabel(app).toString(),
+					app.packageName,
 					packageManager.getApplicationIcon(app.packageName)
 				)
 
