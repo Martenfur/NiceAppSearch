@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity()
 
 				// TODO: move somewhere else.
 				// Opening selected app.
-				val intent: Intent? = packageManager.getLaunchIntentForPackage(item.appPackageName)
+				val intent: Intent? = packageManager.getLaunchIntentForPackage(item.app.packageName)
 				intent?.addCategory(Intent.CATEGORY_LAUNCHER)
 
 				applicationContext.startActivity(intent)
@@ -98,9 +98,8 @@ class MainActivity : AppCompatActivity()
 			if (packageManager.getLaunchIntentForPackage(app.packageName) != null)
 			{
 				val data = AppListData(
-					packageManager.getApplicationLabel(app).toString(),
-					app.packageName,
-					packageManager.getApplicationIcon(app.packageName)
+					app,
+					packageManager
 				)
 
 				appsData.add(data)

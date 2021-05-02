@@ -33,8 +33,8 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 		appIcon = convertView.findViewById(R.id.appIcon)
 		appName = convertView.findViewById(R.id.appName)
 
-		appIcon.setImageDrawable(filteredItems[position].appIcon)
-		appName.text = filteredItems[position].appName
+		appIcon.setImageDrawable(filteredItems[position].getAppIcon())
+		appName.text = filteredItems[position].getAppName()
 
 		return convertView
 	}
@@ -62,7 +62,7 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 				else
 				{
 					var newFilteredItems = allItems.filter{
-						it.appName.toLowerCase().contains(queryString)
+						it.getAppName().toLowerCase().contains(queryString)
 					}
 					if (newFilteredItems.size > 0)
 					{
