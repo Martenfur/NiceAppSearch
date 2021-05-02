@@ -10,7 +10,8 @@
 		android:gravity="fill"
 		android:padding="16dp"
 		android:theme="@style/Theme.Transparent"
-		tools:context=".MainActivity">
+		tools:context=".MainActivity"
+		android:id="@+id/main">
 
 	<LinearLayout
 			android:layout_gravity="fill"
@@ -40,6 +41,7 @@
 	</LinearLayout>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/constraint"
 			android:layout_row="1"
 			android:layout_column="0"
 			android:layout_columnSpan="1"

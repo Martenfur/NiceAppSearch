@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.GridLayout
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
 import kotlin.system.exitProcess
@@ -23,9 +25,18 @@ class MainActivity : AppCompatActivity()
 		setContentView(R.layout.activity_main)
 
 
+
 		listView = findViewById(R.id.app_list_view)
 
 		listView.isEnabled = false
+		listView.isClickable = false
+
+		findViewById<GridLayout>(R.id.main).setOnClickListener {
+			finishAndRemoveTask()
+		}
+		findViewById<ConstraintLayout>(R.id.constraint).setOnClickListener {
+			finishAndRemoveTask()
+		}
 
 
 		val search = findViewById<TextInputEditText>(R.id.app_search)
