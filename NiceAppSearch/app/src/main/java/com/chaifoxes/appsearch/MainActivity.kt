@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
-import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity()
 {
@@ -22,6 +21,7 @@ class MainActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
+
 		setContentView(R.layout.activity_main)
 
 		showKeyboard()
@@ -70,10 +70,13 @@ class MainActivity : AppCompatActivity()
 				val intent: Intent? = packageManager.getLaunchIntentForPackage(item.app.packageName)
 				intent?.addCategory(Intent.CATEGORY_LAUNCHER)
 
-				applicationContext.startActivity(intent)
+				hideKeyboard()
 
 				// And closing our own.
 				finishAndRemoveTask()
+
+				// Should be exactly in this order. Otherwise, some apps may not let the window open.
+				applicationContext.startActivity(intent)
 			}
 		})
 
@@ -83,7 +86,14 @@ class MainActivity : AppCompatActivity()
 	{
 		findViewById<View>(android.R.id.content).rootView.requestFocus()
 		val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+		imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.)
+	}
+
+	private fun hideKeyboard()
+	{
+		findViewById<View>(android.R.id.content).rootView.requestFocus()
+		val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+		imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
 	}
 
 
