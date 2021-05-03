@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity()
 	{
 		findViewById<View>(android.R.id.content).rootView.requestFocus()
 		val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-		imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.)
+		imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY)
 	}
 
 	private fun hideKeyboard()
