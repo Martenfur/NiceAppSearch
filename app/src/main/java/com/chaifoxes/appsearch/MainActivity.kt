@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity()
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 
-
+		showKeyboard()
 
 		listView = findViewById(R.id.app_list_view)
 
@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity()
 			(listView.adapter as AppListAdapter).filter.filter(text)
 		})
 
-		showKeyboard()
 	}
 
 
