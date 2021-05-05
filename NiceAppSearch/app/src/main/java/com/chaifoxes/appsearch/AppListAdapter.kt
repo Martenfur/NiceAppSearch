@@ -12,7 +12,7 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 	private lateinit var appIcon: ImageView
 	private lateinit var appName: TextView
 
-	private var filteredItems: ArrayList<AppListData> = allItems
+	private var filteredItems: ArrayList<AppListData> = arrayListOf()
 
 
 	override fun getCount(): Int =
@@ -46,7 +46,14 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 		{
 			override fun publishResults(charSequence: CharSequence?, filterResults: FilterResults)
 			{
-				filteredItems = filterResults.values as ArrayList<AppListData>
+				if (filterResults.values !is ArrayList<*>)
+				{
+					filteredItems = arrayListOf()
+				}
+				else
+				{
+					filteredItems = filterResults.values as ArrayList<AppListData>
+				}
 				notifyDataSetChanged()
 			}
 
@@ -57,7 +64,7 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 				val filterResults = FilterResults()
 				if (queryString==null || queryString.isEmpty())
 				{
-					filterResults.values = allItems
+					filterResults.values = listOf<AppListData>()
 				}
 				else
 				{
