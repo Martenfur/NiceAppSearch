@@ -1,8 +1,11 @@
 package com.chaifoxes.appsearch
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.widget.RemoteViews
 
 /**
@@ -36,10 +39,14 @@ class SearchWidget : AppWidgetProvider()
 
 internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int)
 {
-	val widgetText = context.getString(R.string.appwidget_text)
 	// Construct the RemoteViews object
 	val views = RemoteViews(context.packageName, R.layout.search_widget)
-	//views.setTextViewText(R.id.appwidget_text, widgetText)
+
+	val intent = Intent(context, MainActivity::class.java)
+
+	val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+
+	views.setOnClickPendingIntent(R.id.main_widget_layout, pendingIntent)
 
 	// Instruct the widget manager to update the widget
 	appWidgetManager.updateAppWidget(appWidgetId, views)
