@@ -46,7 +46,7 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 		{
 			override fun publishResults(charSequence: CharSequence?, filterResults: FilterResults)
 			{
-				if (filterResults.values !is ArrayList<*>)
+				if (filterResults.values !is ArrayList<*> || charSequence?.trim().isNullOrEmpty())
 				{
 					filteredItems = arrayListOf()
 				}
@@ -57,29 +57,37 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 				notifyDataSetChanged()
 			}
 
+
+
 			override fun performFiltering(charSequence: CharSequence?): FilterResults
 			{
-				val queryString = charSequence?.toString()?.toLowerCase()
+				var queryString = charSequence?.toString()?.toLowerCase()?.trim()
 
 				val filterResults = FilterResults()
+
 				if (queryString==null || queryString.isEmpty())
 				{
 					filterResults.values = listOf<AppListData>()
+					return filterResults
 				}
 				else
 				{
-					var newFilteredItems = allItems.filter{
-						it.getAppName().toLowerCase().contains(queryString)
-					}
-					if (newFilteredItems.size > 0)
+					while(queryString?.isNotEmpty()!!)
 					{
-						filterResults.values = newFilteredItems
-					}
-					else
-					{
-						filterResults.values = filteredItems
+						val newFilteredItems = allItems.filter()
+						{
+							it.getAppName().toLowerCase().contains(queryString!!)
+						}
+
+						if (newFilteredItems.isNotEmpty())
+						{
+							filterResults.values = newFilteredItems
+							return filterResults
+						}
+						queryString = queryString.dropLast(1)
 					}
 				}
+
 				return filterResults
 			}
 		}

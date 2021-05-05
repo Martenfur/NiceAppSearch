@@ -13,10 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity()
 {
 	private lateinit var listView: ListView
+
+	private var timer: Timer? = null
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -38,12 +42,35 @@ class MainActivity : AppCompatActivity()
 			finishAndRemoveTask()
 		}
 
-
 		val search = findViewById<TextInputEditText>(R.id.app_search)
+		initListView()
+
 		search.doOnTextChanged(fun(text: CharSequence?, start: Int, count: Int, after: Int)
 		{
-			initListView()
-			(listView.adapter as AppListAdapter).filter.filter(text)
+			if (timer == null)
+			{
+				timer = Timer()
+			}
+			else
+			{
+				timer?.cancel()
+				timer = Timer()
+			}
+
+			timer?.schedule(
+				object : TimerTask()
+				{
+					override fun run()
+					{
+						runOnUiThread()
+						{
+							(listView.adapter as AppListAdapter).filter.filter(text)
+						}
+					}
+				},
+				100
+			)
+
 		})
 
 	}
