@@ -1,7 +1,5 @@
 package com.chaifoxes.appsearch
 
-import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +7,7 @@ import android.widget.*
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
+
 
 class AppList
 {
@@ -97,8 +96,8 @@ class AppList
 				ViewGroup.LayoutParams.WRAP_CONTENT
 			)
 			p.weight = 1f
-			p.width = 58.px
-			p.height = 58.px
+			p.width = 58.dpToPx
+			p.height = 58.dpToPx
 
 			icon.layoutParams = p
 			icon.setImageDrawable(appList[i].getAppIcon())
