@@ -19,7 +19,7 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 		filteredItems.size
 
 	override fun getItem(position: Int): Any =
-		filteredItems.get(position);
+		filteredItems[position];
 
 
 	override fun getItemId(position: Int): Long =
