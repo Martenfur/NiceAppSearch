@@ -1,11 +1,10 @@
 package com.chaifoxes.appsearch
 
-import android.content.pm.PackageManager
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import java.util.ArrayList
+import java.util.*
 
 class RecentAppsView
 {
@@ -16,12 +15,17 @@ class RecentAppsView
 
 	private val appIconSize = 58.dpToPx
 
+	val appHistory: AppHistory
+
 	constructor(_activity: MainActivity)
 	{
 		activity = _activity
 
 		recentAppsView = activity.findViewById(R.id.recent_apps)
 
+		appHistory = AppHistory(activity)
+
+		appHistory.loadAppHistory()
 		populateView()
 	}
 
@@ -44,7 +48,7 @@ class RecentAppsView
 	{
 		val appList = createAppList()
 
-		for (i in 0 until recentAppsCount)
+		for (app in appList)
 		{
 			var icon = ImageView(activity)
 
@@ -57,11 +61,11 @@ class RecentAppsView
 			p.height = appIconSize
 
 			icon.layoutParams = p
-			icon.setImageDrawable(appList[i].getAppIcon())
+			icon.setImageDrawable(app.getAppIcon())
 
 			icon.setOnClickListener()
 			{
-				activity.openApp(appList[i].app.packageName)
+				activity.openApp(app.app.packageName)
 			}
 
 			recentAppsView.addView(icon)
@@ -73,12 +77,12 @@ class RecentAppsView
 	// TODO: Remove.
 	private fun createAppList(): ArrayList<AppListData>
 	{
-		val apps = activity.packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+		val appsData = ArrayList<AppListData>()
 
-		val appsData = ArrayList<AppListData>(apps.size)
-
-		for (app in apps)
+		for (appPackage in appHistory.getFrequencyMap(recentAppsCount))
 		{
+			val app = activity.packageManager.getApplicationInfo(appPackage.first, 0)
+
 			if (activity.packageManager.getLaunchIntentForPackage(app.packageName) != null)
 			{
 				val data = AppListData(
@@ -92,4 +96,5 @@ class RecentAppsView
 
 		return appsData
 	}
+
 }

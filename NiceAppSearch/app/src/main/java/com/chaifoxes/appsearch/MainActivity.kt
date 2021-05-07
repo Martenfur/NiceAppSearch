@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity()
 		val intent: Intent? = packageManager.getLaunchIntentForPackage(packageName)
 		intent?.addCategory(Intent.CATEGORY_LAUNCHER)
 
+		recentAppsView.appHistory.add(packageName)
+		recentAppsView.appHistory.saveAppHistory()
+
 		hideKeyboard()
 
 		// And closing our own.
