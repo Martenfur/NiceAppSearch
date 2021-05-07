@@ -13,7 +13,7 @@ class RecentAppsView
 
 	private val recentAppsCount = 4
 
-	private val appIconSize = 58.dpToPx
+	private val appIconSize = 55.dpToPx
 
 	val appHistory: AppHistory
 
