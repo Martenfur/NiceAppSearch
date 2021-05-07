@@ -7,13 +7,13 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 
 
 class MainActivity : AppCompatActivity()
 {
 
 	private lateinit var appList: AppList
+	private lateinit var recentAppsView: RecentAppsView
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity()
 		showKeyboard()
 
 		appList = AppList(this)
+		recentAppsView = RecentAppsView(this)
 
 		findViewById<GridLayout>(R.id.main).setOnClickListener()
 		{

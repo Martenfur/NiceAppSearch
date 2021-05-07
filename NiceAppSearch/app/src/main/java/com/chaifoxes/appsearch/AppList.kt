@@ -82,35 +82,6 @@ class AppList
 				}
 			}
 		)
-
-		val recentAppsView = activity.findViewById<LinearLayout>(R.id.recent_apps)
-
-		for (i in 0..3)
-		{
-			var b = ImageButton(activity)
-
-			var icon = ImageView(activity)
-
-			val p = LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT
-			)
-			p.weight = 1f
-			p.width = 58.dpToPx
-			p.height = 58.dpToPx
-
-			icon.layoutParams = p
-			icon.setImageDrawable(appList[i].getAppIcon())
-
-			icon.setOnClickListener()
-			{
-				activity.openApp(appList[i].app.packageName)
-			}
-
-
-			recentAppsView.addView(icon)
-		}
-
 	}
 
 
