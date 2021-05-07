@@ -4,10 +4,12 @@ import android.content.pm.PackageManager
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import java.util.ArrayList
 
 class RecentAppsView
 {
+	private var recentAppsView: LinearLayout
 	private val activity: MainActivity
 
 	private val recentAppsCount = 4
@@ -18,15 +20,29 @@ class RecentAppsView
 	{
 		activity = _activity
 
+		recentAppsView = activity.findViewById(R.id.recent_apps)
+
 		populateView()
+	}
+
+
+	fun enable()
+	{
+		recentAppsView.isEnabled = true
+		recentAppsView.isVisible = true
+	}
+
+
+	fun disable()
+	{
+		recentAppsView.isEnabled = false
+		recentAppsView.isVisible = false
 	}
 
 
 	fun populateView()
 	{
 		val appList = createAppList()
-
-		val recentAppsView = activity.findViewById<LinearLayout>(R.id.recent_apps)
 
 		for (i in 0 until recentAppsCount)
 		{

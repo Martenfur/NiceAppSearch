@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
@@ -17,14 +18,13 @@ class AppList
 
 	private val activity: MainActivity
 
-	constructor(_activity: MainActivity)
+	constructor(_activity: MainActivity, recentAppsView: RecentAppsView)
 	{
 		activity = _activity
 
 		listView = activity.findViewById(R.id.app_list_view)
 
-		listView.isEnabled = false
-		listView.isClickable = false
+		disable()
 
 		val search = activity.findViewById<TextInputEditText>(R.id.app_search)
 		initListView()
@@ -50,6 +50,16 @@ class AppList
 							activity.runOnUiThread()
 							{
 								(listView.adapter as AppListAdapter).filter.filter(text)
+								if (text.isNullOrBlank())
+								{
+									recentAppsView.enable()
+									disable()
+								}
+								else
+								{
+									recentAppsView.disable()
+									enable()
+								}
 							}
 						}
 					},
@@ -60,14 +70,30 @@ class AppList
 		)
 	}
 
+	fun enable()
+	{
+		listView.isEnabled = true
+		listView.isVisible = true
+	}
+
+
+	fun disable()
+	{
+		listView.isEnabled = false
+		listView.isVisible = false
+	}
+
+
+	var initialized = false
 
 	private fun initListView()
 	{
-		if (listView.isEnabled)
+		if (initialized)
 		{
 			return
 		}
-		listView.isEnabled = true
+		initialized = true
+		enable()
 
 		val appList = createAppList()
 		val adapter = AppListAdapter(activity, appList)

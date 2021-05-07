@@ -23,8 +23,9 @@ class MainActivity : AppCompatActivity()
 
 		showKeyboard()
 
-		appList = AppList(this)
 		recentAppsView = RecentAppsView(this)
+		appList = AppList(this, recentAppsView)
+
 
 		findViewById<GridLayout>(R.id.main).setOnClickListener()
 		{
