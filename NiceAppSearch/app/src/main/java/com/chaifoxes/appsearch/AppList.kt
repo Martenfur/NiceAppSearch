@@ -1,6 +1,7 @@
 package com.chaifoxes.appsearch
 
 import android.content.pm.PackageManager
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -66,6 +67,23 @@ class AppList
 					100
 				)
 
+			}
+		)
+
+		search.setOnKeyListener(
+			View.OnKeyListener { v, keyCode, event ->
+				if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP)
+				{
+					var v = (listView.adapter as AppListAdapter)
+
+					if (v.filteredItems.isNotEmpty())
+					{
+						activity.openApp(v.filteredItems[0].app.packageName)
+					}
+
+					return@OnKeyListener true
+				}
+				false
 			}
 		)
 	}

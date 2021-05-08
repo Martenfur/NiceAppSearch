@@ -12,7 +12,7 @@ class AppListAdapter(private val context: Context, private val allItems: java.ut
 	private lateinit var appIcon: ImageView
 	private lateinit var appName: TextView
 
-	private var filteredItems: ArrayList<AppListData> = arrayListOf()
+	var filteredItems: ArrayList<AppListData> = arrayListOf()
 
 
 	override fun getCount(): Int =
