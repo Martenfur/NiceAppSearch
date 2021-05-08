@@ -1,5 +1,6 @@
 package com.chaifoxes.appsearch
 
+import android.content.pm.PackageManager
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -11,7 +12,7 @@ class RecentAppsView
 	private var recentAppsView: LinearLayout
 	private val activity: MainActivity
 
-	private val recentAppsCount = 4
+	private val maxRecentAppsCount = 4
 
 	private val appIconSize = 55.dpToPx
 
@@ -79,18 +80,34 @@ class RecentAppsView
 	{
 		val appsData = ArrayList<AppListData>()
 
-		for (appPackage in appHistory.getFrequencyMap(recentAppsCount))
+		var appsCount = 0
+
+		for (appPackage in appHistory.getFrequencyMap())
 		{
-			val app = activity.packageManager.getApplicationInfo(appPackage.first, 0)
-
-			if (activity.packageManager.getLaunchIntentForPackage(app.packageName) != null)
+			try
 			{
-				val data = AppListData(
-					app,
-					activity.packageManager
-				)
+				val app = activity.packageManager.getApplicationInfo(appPackage.first, 0)
 
-				appsData.add(data)
+				if (activity.packageManager.getLaunchIntentForPackage(app.packageName) != null)
+				{
+					val data = AppListData(
+						app,
+						activity.packageManager
+					)
+
+					appsData.add(data)
+				}
+
+				appsCount += 1
+
+				if (appsCount >= maxRecentAppsCount)
+				{
+					return appsData
+				}
+			}
+			catch (e: PackageManager.NameNotFoundException)
+			{
+				// Skip if the app was just deleted.
 			}
 		}
 

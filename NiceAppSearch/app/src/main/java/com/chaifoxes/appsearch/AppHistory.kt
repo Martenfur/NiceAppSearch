@@ -57,14 +57,15 @@ class AppHistory
 		}
 	}
 
-	fun getFrequencyMap(amount: Int): List<Pair<String, Int>>
+	fun getFrequencyMap(): List<Pair<String, Int>>
 	{
 		val freqMap = emptyMap<String, Int>().toMutableMap()
 		for(app in appHistory)
 		{
 			freqMap[app] = freqMap.getOrElse(app, {0}) + 1
 		}
-		val sortedMap = freqMap.toList().sortedByDescending { (_, value) -> value }.subList(0, Math.min(amount, freqMap.size))
+
+		val sortedMap = freqMap.toList().sortedByDescending { (_, value) -> value }
 
 		return sortedMap
 	}
