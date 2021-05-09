@@ -5,6 +5,8 @@
 Clean up your cluttered homescreen and speed up your app switching using Nice App Search. No unnecessary menus bloat, or Google search - find and launch any app you want in just a couple of clicks. 
 Use it as an app, as a widget or, if your phone has a programmable physical button, map Nice App Search to it and launch it from anywhere. 
 
+[Download on Google Play](https://play.google.com/store/apps/details?id=com.chaifoxes.appsearch)
+
 Features:
 - Fast app search
 - Frequent Apps bar
