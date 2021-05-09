@@ -42,7 +42,8 @@
 					android:focusedByDefault="true"
 					android:gravity="center_vertical"
 					android:maxLines="1"
-					android:singleLine="true" />
+					android:singleLine="true"
+					android:textColor="#D8D8D8"/>
 		</LinearLayout>
 
 		<LinearLayout
