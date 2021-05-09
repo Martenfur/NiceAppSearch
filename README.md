@@ -14,5 +14,5 @@ Features:
 - Opensource featuring MIT license - you can modify and tweak it however you like
 - Nice and clean design :)
 
-![s1](screenshots/s1.jpg) ![s2](screenshots/s2.jpg)
+![s1](screenshots/s1_small.jpg) ![s2](screenshots/s2_small.jpg)
 
