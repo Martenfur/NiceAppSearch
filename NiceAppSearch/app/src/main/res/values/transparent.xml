@@ -2,7 +2,7 @@
 	<!-- Base application theme. -->
 	<style name="Theme.Transparent" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<item name="android:windowIsTranslucent">true</item>
-		<item name="android:windowBackground">#9933373B</item>
+		<item name="android:windowBackground">#DD33373B</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:backgroundDimEnabled">false</item>
