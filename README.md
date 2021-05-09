@@ -1,6 +1,6 @@
 # Nice App Search
 
-![logo](NiceAppSearch\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png)
+![logo](NiceAppSearch/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
 Clean up your cluttered homescreen and speed up your app switching using Nice App Search. No unnecessary menus bloat, or Google search - find and launch any app you want in just a couple of clicks. 
 Use it as an app, as a widget or, if your phone has a programmable physical button, map Nice App Search to it and launch it from anywhere. 
@@ -14,5 +14,5 @@ Features:
 - Opensource featuring MIT license - you can modify and tweak it however you like
 - Nice and clean design :)
 
-![s1](D:\_Projects\NiceAppSearch\screenshots\s1.jpg) ![s1](D:\_Projects\NiceAppSearch\screenshots\s2.jpg)
+![s1](screenshots/s1.jpg) ![s2](screenshots/s2.jpg)
 
